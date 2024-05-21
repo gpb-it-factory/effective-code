@@ -1,4 +1,4 @@
-package team.codemonsters.refactoringexample
+package team.codemonsters.code
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
