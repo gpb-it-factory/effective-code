@@ -1,11 +1,9 @@
 package team.codemonsters.code.walletRegistration.application
 
 import org.springframework.stereotype.Service
+import team.codemonsters.code.walletRegistration.domain.*
 import team.codemonsters.code.walletRegistration.infrastructure.ClientEntity
-import team.codemonsters.code.walletRegistration.domain.ClientId
 import team.codemonsters.code.walletRegistration.infrastructure.ClientRepository
-import team.codemonsters.code.walletRegistration.domain.WalletRegistrationRequest
-import team.codemonsters.code.walletRegistration.domain.Client
 
 /**
  * Транслирует данные из уровня хранения данных в уровень приложения.
@@ -23,7 +21,10 @@ class ClientGateway(val clientRepository: ClientRepository) {
     }
 
     private fun map(clientEntity: ClientEntity): Result<Client> {
-        return Client.emerge(clientEntity)
+        val clientId = clientEntity.id
+        val name = clientEntity.clientName
+        val walletId = clientEntity.walletId
+        return Client.emerge(clientId, name, walletId)
     }
 
     fun registerWallet(walletRegistrationRequest: WalletRegistrationRequest): Result<Client> {
