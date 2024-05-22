@@ -36,6 +36,6 @@ class WalletRegistrationService(
         val clientId = ClientId.emerge(registrationRequest.clientId)
         if (clientId.isFailure) {
             println("Ошибка : ${clientId.exceptionOrNull()!!.message}")
-            return Result.failure(walletId.exceptionOrNull()!!)
+            return Result.failure(clientId.exceptionOrNull()!!)
         }
 }
