@@ -32,4 +32,15 @@ class WalletRegistrationService(
         return clientGateway.registerWallet(walletRegistrationRequest.getOrThrow())
     }
 
+    companion object {
+        fun checkClientId(clientId: String): Result<ClientId> {
+            val clientId = ClientId.emerge(clientId)
+            if (clientId.isFailure) {
+                println("Ошибка : ${clientId.exceptionOrNull()!!.message}")
+                return Result.failure(clientId.exceptionOrNull()!!)
+            }
+            return clientId;
+        }
+    }
+
 }
