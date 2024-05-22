@@ -1,10 +1,10 @@
-package team.codemonsters.code.walletRegistration
+package team.codemonsters.code.walletRegistration.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import team.codemonsters.code.walletRegistration.infrastructure.ClientEntity
 
 class WalletRegistrationRequestTest {
-
     @Test
     fun `should be valid wallet registration request`() {
         //arrange

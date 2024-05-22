@@ -1,7 +1,8 @@
-package team.codemonsters.code.walletRegistration
+package team.codemonsters.code.walletRegistration.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import team.codemonsters.code.walletRegistration.domain.WalletId
 
 class WalletIdTest {
 

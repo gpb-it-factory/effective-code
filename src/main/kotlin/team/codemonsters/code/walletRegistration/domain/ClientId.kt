@@ -1,4 +1,4 @@
-package team.codemonsters.code.walletRegistration
+package team.codemonsters.code.walletRegistration.domain
 
 import java.util.*
 

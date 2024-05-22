@@ -1,4 +1,6 @@
-package team.codemonsters.code.walletRegistration
+package team.codemonsters.code.walletRegistration.domain
+
+import team.codemonsters.code.walletRegistration.infrastructure.ClientEntity
 
 data class Client(
     val clientId: ClientId,
@@ -17,14 +19,15 @@ data class Client(
                 return Result.failure(name.exceptionOrNull()!!)
 
             lateinit var walletId: WalletId
-            if (null == entity.walletId)
+            if (null == entity.walletId) {
                 walletId = WalletId.Empty
-            else {
-                val walletIdResult = WalletId.emerge(entity.walletId)
-                if (walletIdResult.isFailure)
-                    return Result.failure(walletIdResult.exceptionOrNull()!!)
-                walletId = walletIdResult.getOrThrow()
+                return Result.success(Client(clientId.getOrThrow(), name.getOrThrow(), walletId))
             }
+
+            val walletIdResult = WalletId.emerge(entity.walletId)
+            if (walletIdResult.isFailure)
+                return Result.failure(walletIdResult.exceptionOrNull()!!)
+            walletId = walletIdResult.getOrThrow()
 
             return Result.success(Client(clientId.getOrThrow(), name.getOrThrow(), walletId))
 

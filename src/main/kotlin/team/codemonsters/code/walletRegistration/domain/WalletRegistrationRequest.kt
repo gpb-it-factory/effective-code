@@ -1,4 +1,4 @@
-package team.codemonsters.code.walletRegistration
+package team.codemonsters.code.walletRegistration.domain
 
 
 data class WalletRegistrationRequest private constructor(
