@@ -34,12 +34,12 @@ class WalletRegistrationService(
 
     companion object {
         fun checkClientId(clientId: String): Result<ClientId> {
-            val clientId = ClientId.emerge(clientId)
-            if (clientId.isFailure) {
-                println("Ошибка : ${clientId.exceptionOrNull()!!.message}")
-                return Result.failure(clientId.exceptionOrNull()!!)
+            val clientIdResult = ClientId.emerge(clientId)
+            if (clientIdResult.isFailure) {
+                println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
+                return Result.failure(clientIdResult.exceptionOrNull()!!)
             }
-            return clientId;
+            return clientIdResult;
         }
     }
 
