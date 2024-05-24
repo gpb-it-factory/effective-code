@@ -23,15 +23,17 @@ class TerminalApp(
         //Пример формирования DTO из аргументов командной строки
         val registrationRequest = WalletRegistrationDTO(args[0].toString())
         println("Client id: ${registrationRequest.clientId}")
+
         //Проверяем Данные которые поступили на вход
         //val clientId = ClientId.emerge(registrationRequest.clientId)
-        val clientId = WalletRegistrationService.checkClientId(registrationRequest.clientId)
-        if (clientId.isFailure) {
-            println("Ошибка : ${clientId.exceptionOrNull()!!.message}")
-            return
-        }
+//        val clientId = WalletRegistrationService.checkClientId(registrationRequest.clientId)
+//        if (clientId.isFailure) {
+//            println("Ошибка : ${clientId.exceptionOrNull()!!.message}")
+//            return
+//        }
+
         //Проверили запрос и передали в слой приложения
-        val registrationResult = walletRegistrationService.registerWallet(clientId.getOrThrow())
+        val registrationResult = walletRegistrationService.registerWallet(registrationRequest.clientId)
         if(registrationResult.isFailure) {
             println("Ошибка : ${registrationResult.exceptionOrNull()!!.message}")
             return

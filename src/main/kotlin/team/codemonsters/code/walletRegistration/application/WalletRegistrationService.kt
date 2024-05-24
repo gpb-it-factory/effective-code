@@ -13,8 +13,15 @@ class WalletRegistrationService(
     private val walletGateway: WalletGateway
 ) {
     private val log = LoggerFactory.getLogger(WalletRegistrationService::class.java)
-    fun registerWallet(clientId: ClientId): Result<Client> {
-        val clientResult = clientGateway.findClient(clientId)
+    fun registerWallet(clientId: String): Result<Client> {
+
+        val clientIdResult = ClientId.emerge(clientId)
+        if (clientIdResult.isFailure) {
+            println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
+            return Result.failure(clientIdResult.exceptionOrNull()!!)
+        }
+
+        val clientResult = clientGateway.findClient(clientIdResult.getOrThrow())
         if (clientResult.isFailure)
             return Result.failure(clientResult.exceptionOrNull()!!)
 
@@ -32,15 +39,14 @@ class WalletRegistrationService(
         return clientGateway.registerWallet(walletRegistrationRequest.getOrThrow())
     }
 
-    companion object {
-        fun checkClientId(clientId: String): Result<ClientId> {
-            val clientIdResult = ClientId.emerge(clientId)
-            if (clientIdResult.isFailure) {
-                println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
-                return Result.failure(clientIdResult.exceptionOrNull()!!)
-            }
-            return clientIdResult;
-        }
-    }
-
+//    companion object {
+//        fun checkClientId(clientId: String): Result<ClientId> {
+//            val clientIdResult = ClientId.emerge(clientId)
+//            if (clientIdResult.isFailure) {
+//                println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
+//                return Result.failure(clientIdResult.exceptionOrNull()!!)
+//            }
+//            return clientIdResult;
+//        }
+//    }
 }

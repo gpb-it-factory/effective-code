@@ -12,7 +12,7 @@ class WalletRegistrationServiceTest {
     fun `should register wallet`() {
         //arrange
         val service = WalletRegistrationService(ClientGateway(ClientRepository()), WalletGateway())
-        val clientId = ClientId.emerge("96104464-54ea-44e6-876b-8d45428776e3").getOrThrow()
+        val clientId = "96104464-54ea-44e6-876b-8d45428776e3"
         //act
         val result = service.registerWallet(clientId)
         //assert
