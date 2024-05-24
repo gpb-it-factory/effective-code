@@ -33,7 +33,7 @@ class TerminalApp(
 //        }
 
         //Проверили запрос и передали в слой приложения
-        val registrationResult = walletRegistrationService.registerWallet(registrationRequest.clientId)
+        val registrationResult = walletRegistrationService.registerWallet(registrationRequest)
         if(registrationResult.isFailure) {
             println("Ошибка : ${registrationResult.exceptionOrNull()!!.message}")
             return

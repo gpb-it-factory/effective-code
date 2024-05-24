@@ -13,11 +13,11 @@ class WalletRegistrationService(
     private val walletGateway: WalletGateway
 ) {
     private val log = LoggerFactory.getLogger(WalletRegistrationService::class.java)
-    fun registerWallet(clientId: String): Result<Client> {
+    fun registerWallet(walletRegistrationDTO: WalletRegistrationDTO): Result<Client> {
 
-        val clientIdResult = ClientId.emerge(clientId)
+        val clientIdResult = ClientId.emerge(walletRegistrationDTO.clientId)
         if (clientIdResult.isFailure) {
-            println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
+            log.info("Wrong client id")
             return Result.failure(clientIdResult.exceptionOrNull()!!)
         }
 
