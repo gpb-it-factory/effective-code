@@ -15,7 +15,7 @@ class ClientTest {
             walletId = null
         )
         //act
-        val client = Client.emerge(entity)
+        val client = Client.emerge(entity.id, entity.clientName, entity.walletId)
         //assert
         assertClient(client)
     }

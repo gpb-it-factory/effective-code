@@ -24,7 +24,8 @@ class TerminalApp(
         val registrationRequest = WalletRegistrationDTO(args[0].toString())
         println("Client id: ${registrationRequest.clientId}")
         //Проверяем Данные которые поступили на вход
-        val clientId = ClientId.emerge(registrationRequest.clientId)
+        //val clientId = ClientId.emerge(registrationRequest.clientId)
+        val clientId = WalletRegistrationService.checkClientId(registrationRequest.clientId)
         if (clientId.isFailure) {
             println("Ошибка : ${clientId.exceptionOrNull()!!.message}")
             return

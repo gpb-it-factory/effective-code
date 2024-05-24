@@ -9,27 +9,27 @@ data class Client(
 ) {
 
     companion object {
-        fun emerge(entity: ClientEntity): Result<Client> {
-            val clientId = ClientId.emerge(entity.id)
-            if (clientId.isFailure)
-                return Result.failure(clientId.exceptionOrNull()!!)
+        fun emerge(clientId : String, name : String, wllId: String?): Result<Client> {
+            val clientIdResult = ClientId.emerge(clientId)
+            if (clientIdResult.isFailure)
+                return Result.failure(clientIdResult.exceptionOrNull()!!)
 
-            val name = Name.emerge(entity.clientName)
-            if (name.isFailure)
-                return Result.failure(name.exceptionOrNull()!!)
+            val nameResult = Name.emerge(name)
+            if (nameResult.isFailure)
+                return Result.failure(nameResult.exceptionOrNull()!!)
 
             lateinit var walletId: WalletId
-            if (null == entity.walletId) {
+            if (null == wllId) {
                 walletId = WalletId.Empty
-                return Result.success(Client(clientId.getOrThrow(), name.getOrThrow(), walletId))
+                return Result.success(Client(clientIdResult.getOrThrow(), nameResult.getOrThrow(), walletId))
             }
 
-            val walletIdResult = WalletId.emerge(entity.walletId)
+            val walletIdResult = WalletId.emerge(wllId)
             if (walletIdResult.isFailure)
                 return Result.failure(walletIdResult.exceptionOrNull()!!)
             walletId = walletIdResult.getOrThrow()
 
-            return Result.success(Client(clientId.getOrThrow(), name.getOrThrow(), walletId))
+            return Result.success(Client(clientIdResult.getOrThrow(), nameResult.getOrThrow(), walletId))
 
         }
     }

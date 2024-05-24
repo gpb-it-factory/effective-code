@@ -14,7 +14,7 @@ class WalletRegistrationRequestTest {
             clientName = "Рома",
             walletId = null
         )
-        val client = Client.emerge(entity)
+        val client = Client.emerge(entity.id, entity.clientName, entity.walletId)
 
         //act
         val walletRegistrationRequest = WalletRegistrationRequest.emerge(client.getOrThrow(), walletId.getOrThrow())
