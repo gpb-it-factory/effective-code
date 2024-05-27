@@ -1,5 +1,6 @@
 package team.codemonsters.code.walletRegistration.presentation
 
+import org.bouncycastle.asn1.ocsp.Request
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
@@ -33,7 +34,7 @@ class TerminalApp(
 //        }
 
         //Проверили запрос и передали в слой приложения
-        val registrationResult = walletRegistrationService.registerWallet(registrationRequest)
+        val registrationResult = walletRegistrationService.registerWallet(registrationRequest.clientId)
         if(registrationResult.isFailure) {
             println("Ошибка : ${registrationResult.exceptionOrNull()!!.message}")
             return

@@ -13,9 +13,9 @@ class WalletRegistrationService(
     private val walletGateway: WalletGateway
 ) {
     private val log = LoggerFactory.getLogger(WalletRegistrationService::class.java)
-    fun registerWallet(walletRegistrationDTO: WalletRegistrationDTO): Result<Client> {
+    fun registerWallet(clientId: String): Result<Client> {
 
-        val clientIdResult = ClientId.emerge(walletRegistrationDTO.clientId)
+        val clientIdResult = ClientId.emerge(clientId)
         if (clientIdResult.isFailure) {
             return Result.failure(clientIdResult.exceptionOrNull()!!)
         }
