@@ -17,7 +17,6 @@ class WalletRegistrationService(
 
         val clientIdResult = ClientId.emerge(walletRegistrationDTO.clientId)
         if (clientIdResult.isFailure) {
-            log.info("Wrong client id")
             return Result.failure(clientIdResult.exceptionOrNull()!!)
         }
 
