@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 import team.codemonsters.code.walletRegistration.domain.Client
 import team.codemonsters.code.walletRegistration.domain.ClientId
 import team.codemonsters.code.walletRegistration.domain.WalletRegistrationRequest
-import team.codemonsters.code.walletRegistration.presentation.WalletRegistrationDTO
 
 @Service
 class WalletRegistrationService(
@@ -13,9 +12,9 @@ class WalletRegistrationService(
     private val walletGateway: WalletGateway
 ) {
     private val log = LoggerFactory.getLogger(WalletRegistrationService::class.java)
-    fun registerWallet(clientId: String): Result<Client> {
+    fun registerWallet(uncheckedRequest: UncheckedRequest): Result<Client> {
 
-        val clientIdResult = ClientId.emerge(clientId)
+        val clientIdResult = ClientId.emerge(uncheckedRequest.clientId)
         if (clientIdResult.isFailure) {
             return Result.failure(clientIdResult.exceptionOrNull()!!)
         }
