@@ -15,6 +15,5 @@ class TestUtil {
         fun <T> readResourceFilePathTo(filePath: String, clazz: Class<T>): T {
             return MAPPER.readValue(File(this::class.java.getResource(filePath)!!.toURI()), clazz)
         }
-
     }
 }
