@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 import team.codemonsters.code.walletRegistration.domain.Client
 import team.codemonsters.code.walletRegistration.domain.ClientId
 import team.codemonsters.code.walletRegistration.domain.WalletRegistrationRequest
-import team.codemonsters.code.walletRegistration.presentation.WalletRegistrationDTO
 
 @Service
 class WalletRegistrationService(
@@ -13,8 +12,14 @@ class WalletRegistrationService(
     private val walletGateway: WalletGateway
 ) {
     private val log = LoggerFactory.getLogger(WalletRegistrationService::class.java)
-    fun registerWallet(clientId: ClientId): Result<Client> {
-        val clientResult = clientGateway.findClient(clientId)
+    fun registerWallet(uncheckedRequest: UncheckedRequest): Result<Client> {
+
+        val clientIdResult = ClientId.emerge(uncheckedRequest.clientId)
+        if (clientIdResult.isFailure) {
+            return Result.failure(clientIdResult.exceptionOrNull()!!)
+        }
+
+        val clientResult = clientGateway.findClient(clientIdResult.getOrThrow())
         if (clientResult.isFailure)
             return Result.failure(clientResult.exceptionOrNull()!!)
 
@@ -32,15 +37,14 @@ class WalletRegistrationService(
         return clientGateway.registerWallet(walletRegistrationRequest.getOrThrow())
     }
 
-    companion object {
-        fun checkClientId(clientId: String): Result<ClientId> {
-            val clientIdResult = ClientId.emerge(clientId)
-            if (clientIdResult.isFailure) {
-                println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
-                return Result.failure(clientIdResult.exceptionOrNull()!!)
-            }
-            return clientIdResult;
-        }
-    }
-
+//    companion object {
+//        fun checkClientId(clientId: String): Result<ClientId> {
+//            val clientIdResult = ClientId.emerge(clientId)
+//            if (clientIdResult.isFailure) {
+//                println("Ошибка : ${clientIdResult.exceptionOrNull()!!.message}")
+//                return Result.failure(clientIdResult.exceptionOrNull()!!)
+//            }
+//            return clientIdResult;
+//        }
+//    }
 }

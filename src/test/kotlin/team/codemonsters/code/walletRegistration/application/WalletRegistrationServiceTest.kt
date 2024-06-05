@@ -3,7 +3,6 @@ package team.codemonsters.code.walletRegistration.application
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import team.codemonsters.code.walletRegistration.domain.Client
-import team.codemonsters.code.walletRegistration.domain.ClientId
 import team.codemonsters.code.walletRegistration.infrastructure.ClientRepository
 
 class WalletRegistrationServiceTest {
@@ -12,9 +11,10 @@ class WalletRegistrationServiceTest {
     fun `should register wallet`() {
         //arrange
         val service = WalletRegistrationService(ClientGateway(ClientRepository()), WalletGateway())
-        val clientId = ClientId.emerge("96104464-54ea-44e6-876b-8d45428776e3").getOrThrow()
+        val clientId = "96104464-54ea-44e6-876b-8d45428776e3"
+        val uncheckedRequest = UncheckedRequest(clientId)
         //act
-        val result = service.registerWallet(clientId)
+        val result = service.registerWallet(uncheckedRequest)
         //assert
         assertThatWalletRegistered(result)
     }
