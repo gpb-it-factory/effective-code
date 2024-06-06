@@ -270,6 +270,25 @@ private static void assertSomeAccountBalanceLogic(boolean isSuccessful, Balance 
 - [Testcontainers](https://java.testcontainers.org/) для поднятия внепроцессных зависимостей;
 - [Awaitility](http://www.awaitility.org/) для тестирования асинхронных взаимодействий.
 
+### Пример
+
+```java
+// Взаимодействуем с нашим приложением как внешний клиент, предварительно
+// "подняв" все внепроцессные зависимости в BaseTest
+class CurrencyRatesTest extends BaseTest {
+    @Test
+    @DisplayName("Успешное получение курса валют")
+    void qwe() {
+        var request = createCurrencyRateRequest();
+        String jsonRequest = mapper.writeValueAsString(request);
+
+        var response = sendMessageAndWaitForResponse(jsonRequest, config.getInputTopic(), config.getOutputTopic());
+
+        assertCurrencyRateResponseIsSuccessful(response);
+    }
+}
+```
+
 ## Рекомендации
 
 Про практику AAA можно прочитать в статье Владимира Хорикова [Making Better Unit Tests: part 1, the AAA pattern](https://freecontent.manning.com/making-better-unit-tests-part-1-the-aaa-pattern/)     
