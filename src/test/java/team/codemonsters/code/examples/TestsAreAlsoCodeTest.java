@@ -10,32 +10,6 @@ public class TestsAreAlsoCodeTest {
     class UglyTests {
         private static int sharedState = 0;
 
-        @Test
-        void test0() {
-            var qwe = "qwe";
-            var asd = "asd";
-
-            // Отсутствие проверки, только действие
-            var something = "qwe" + "asd";
-        }
-
-        @Test
-        void test1() {
-            // Отсутствие проверки, только действие
-            var something = "qwe" + "asd";
-        }
-
-        @Test
-        void test2() {
-            // Использование Sleep для эмуляции работы
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-
         // название теста ни о чём не говорит
         @Test
         void test3() {
@@ -80,13 +54,6 @@ public class TestsAreAlsoCodeTest {
             // Избыточное использование комментариев
             // Очень важная проверка математической функции, ожидаем 1+1=2
             Assertions.assertTrue(1 + 1 == 2); // Проверка мотематики, важно проверить математику
-        }
-    }
-
-    @Nested
-    class GoodTests {
-        @Test
-        void test() {
         }
     }
 }
