@@ -46,7 +46,6 @@
 
 Технологии:
 - используем [JUnit5](https://junit.org/junit5/) как движок для тестов;
-- используем [SpringBootTest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test) для интеграционных тестов; 
 - используем [AssertJ](https://assertj.github.io/doc/) для утверждений.
 
 ## Общие рекомендации
@@ -232,7 +231,7 @@ private static void assertSomeAccountBalanceLogic(boolean isSuccessful, Balance 
 Вы можете юнит-тестировать как один класс, так и несколько классов, при условии,
 что ни один из них не является совместной зависимостью.
 
-# Эффективные юнит-тесты
+### Эффективные юнит-тесты
 
 Успешный набор тестов обладает следующими свойствами:
 - он интегрирован в цикл разработки;
@@ -248,14 +247,39 @@ private static void assertSomeAccountBalanceLogic(boolean isSuccessful, Balance 
 
 ![Что тестировать юнитами](images/what-to-unit-test.png)
 
-# Интеграционные тесты
+## Интеграционные тесты
 
+В отличие от юнит-тесты, которые покрывают доменную модель и бизнес-правила, интеграционные тесты проверяют код, связывающий доменную модель с внепроцессными зависимостями.
+Используйте интеграционные тесты для покрытия одного позитивного пути, а так же всех пограничных случаев, которые не могут быть покрыты юнит-тестами.
 
-# Рекомендации
+Используйте реальные экземпляры управляемых зависимостей (например: база данных) в интеграционных тестах; заменяйте неуправляемые зависимости (например: SMTP-сервер) моками.
 
-Про практику AAA можно прочитать в статье Владимира Хорикова [Making Better Unit Tests: part 1, the AAA pattern](https://freecontent.manning.com/making-better-unit-tests-part-1-the-aaa-pattern/)  
-Про практику Given-When-Then можно прочитать в статье Мартина Фаулера [Given When Then](https://martinfowler.com/bliki/GivenWhenThen.html)  
+### Общие рекомендации по интеграционным тестам
 
-Статья Макса Морева и Ваганова Вадима про интеграционные тесты с использованием Testcontainers и Wiremock - [Гайд по чистому коду: учимся писать тесты](https://tproger.ru/articles/gajd-po-chistomu-kodu-uchimsya-pisat-testy)
+Эффективно использовать интеграционные тесты возможно в системе где:
+- явно определены границы модели предметной области;
+- минимально количество слоев;
+- отсутствуют циклические зависимости;
+- определены интерфейсы для неуправляемых зависимостей.
+
+Четкая граница между классами предметной области и контроллерами помогает отличать юнит-тесты от интеграционных.
+
+### Технологии для интеграционных тестов
+
+- используем [SpringBootTest](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test) для интеграционных тестов для работы с контекстом Spring и готовых решений для тестирования;
+- [Testcontainers](https://java.testcontainers.org/) для поднятия внепроцессных зависимостей;
+- [Awaitility](http://www.awaitility.org/) для тестирования асинхронных взаимодействий.
+
+## Рекомендации
+
+Про практику AAA можно прочитать в статье Владимира Хорикова [Making Better Unit Tests: part 1, the AAA pattern](https://freecontent.manning.com/making-better-unit-tests-part-1-the-aaa-pattern/)     
+Про практику Given-When-Then можно прочитать в статье Мартина Фаулера [Given When Then](https://martinfowler.com/bliki/GivenWhenThen.html)   
+
 Книга Владимира Хорикова [“Принципы Юнит-Тестирования”](https://www.piter.com/product/printsipy-yunit-testirovaniya)  
-Доклад про TDD от Ion Cooper’а [TDD, Where Did It All Go Wrong (Ian Cooper)](https://youtu.be/EZ05e7EMOLM?si=yqwTM7NB-Bbum2TV)
+Доклад про TDD от Ion Cooper’а [TDD, Where Did It All Go Wrong (Ian Cooper)](https://youtu.be/EZ05e7EMOLM?si=yqwTM7NB-Bbum2TV)   
+
+[Сергей Егоров — TestContainers — интеграционное тестирование с Docker](https://youtu.be/PEVVvZOt7bY?si=7n3YSuTo6k38aiQU)  
+[Testcontainers for Java](https://java.testcontainers.org/)  
+[Testcontainers for Java / Files and volumes](https://java.testcontainers.org/features/files/)  
+Статья Макса Морева и Ваганова Вадима про интеграционные тесты с использованием Testcontainers и Wiremock - [Гайд по чистому коду: учимся писать тесты](https://tproger.ru/articles/gajd-po-chistomu-kodu-uchimsya-pisat-testy)   
+
