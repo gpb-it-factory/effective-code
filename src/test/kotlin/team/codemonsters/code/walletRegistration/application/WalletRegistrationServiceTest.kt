@@ -9,13 +9,12 @@ class WalletRegistrationServiceTest {
 
     @Test
     fun `should register wallet`() {
-        //arrange
         val service = WalletRegistrationService(ClientGateway(ClientRepository()), WalletGateway())
         val clientId = "96104464-54ea-44e6-876b-8d45428776e3"
         val uncheckedRequest = UncheckedRequest(clientId)
-        //act
+
         val result = service.registerWallet(uncheckedRequest)
-        //assert
+
         assertThatWalletRegistered(result)
     }
 
@@ -23,5 +22,4 @@ class WalletRegistrationServiceTest {
         assertThat(result.isSuccess).isTrue
         assertThat(result.getOrThrow().walletId.value).isEqualTo("3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy")
     }
-
 }
